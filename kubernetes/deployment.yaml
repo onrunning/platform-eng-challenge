@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: blog
+  name: blog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: blog
+
+  template:
+    metadata:
+      labels:
+        app: blog
+
+    spec:
+      securityContext: {}
+      containers:
+      - image: 000000000000.dkr.ecr.us-east-1.amazonaws.com/blog:TAG
+        imagePullPolicy: IfNotPresent
+        name: blog
