@@ -1,0 +1,25 @@
+version: '3'
+
+services:
+
+  database:
+    image: postgres
+    environment:
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=blog_development
+    volumes:
+      - ./dbdata:/var/lib/postgresql/data
+    ports:
+      - 5432:5432
+
+  blog:
+    build:
+      context: .
+    command: bin/rails server --port 3000 --binding 0.0.0.0
+    ports:
+      - "3000:3000"
+    environment:
+      - RAILS_ENV=development
+    depends_on:
+      - database
+
