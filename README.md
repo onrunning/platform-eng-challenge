@@ -10,23 +10,16 @@ This code repository contains the blog rails app based on the [Getting Started w
 There are some improvements and bug fixes that can be made in:
 
 - `Dockerfile`
-- `docker-compose.yml`
 - `.github/workflows/build.yml`
 - The automation of repetitive tasks
 
 ## Tasks
-
 
 ### Containers
 
 - [ ] Looking at the Dockerfile, how can we avoid busting the cache for the dependency update everytime we update the source code ?
 - [ ] Ideally the image size for running in production should be less than 1GB (**bonus**)
 - [ ] Use build arguments so we can use the same ruby version as defined in file `blog/.ruby-version` as opposed of an hardcoded image version
-- [ ] Persist the database's data for future, so that when the service is stopped the data is not lost
-- [ ] Check if the environment variables defined in the blog service are valid and match expected names/values in the rails database configuration `blog/config/database.yml`
-- [ ] Once all services are started, ensure that database is created and has no pending migrations (can be done by using `bin/rake db:create db:migrate`) (**bonus**)
-- [ ] Automate all repetitive tasks such as building the image, starting/stopping the services, run database migrations (**bonus**)
-- [ ] Test that everything works by accessing the [blog app](http://localhost:3000/), creating an article, restarting all services, loading the article and deleting it afterwards (**bonus**)
 
 ### Continuous Deployment
 
@@ -45,7 +38,6 @@ In `monitor.tf` there are two resources with an imaginary type that define datab
 
 - [ ] How can we simplify the change of values that keep repeating ?
 - [ ] If we get a request to create 20 more databases, how can we avoid duplicating some of the code for the required 40 extra monitors ? (hint: we might want to adjust the values for each monitor)
-
 
 ### Kubernetes
 
