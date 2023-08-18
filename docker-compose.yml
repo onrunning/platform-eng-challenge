@@ -7,8 +7,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=postgres
       - POSTGRES_DB=blog_development
-    volumes:
-      - ./dbdata:/var/lib/postgresql/data
+
     ports:
       - 5432:5432
 
