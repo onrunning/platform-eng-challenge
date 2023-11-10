@@ -1,4 +1,4 @@
-name: Build
+name: Build and Push Docker Image
 
 on:
   push:
@@ -15,9 +15,23 @@ jobs:
 
     steps:
       - name: Checkout the code
-        uses: actions/checkout@v1
+        uses: actions/checkout@v2
 
-      - name: Build Image
+      - name: Install Docker
         run: |
-          docker-compose build
+          sudo apt-get update
+          sudo apt-get -y install docker.io
 
+      - name: Login to AWS ECR
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@v1
+
+      - name: Build, tag, and push docker image to Amazon ECR
+        if: github.event_name == 'push'
+        env:
+          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          REPOSITORY: my-ecr-repo
+          IMAGE_TAG: ${{ github.sha }}
+        run: |
+          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG -f path/to/Dockerfile .
+          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
